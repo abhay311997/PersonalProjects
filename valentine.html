@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffeef2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #container {
+            padding: 20px;
+        }
+
+        .emoji-display {
+            font-size: 80px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+            position: relative;
+        }
+
+        .success-msg {
+            display: none;
+        }
+
+        .success-msg h1 {
+            font-size: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="main-card">
+            <div class="emoji-display" id="emoji">🥺</div>
+            <h1 id="question">Will you be my Valentine?</h1>
+            <div class="buttons">
+                <button id="yesBtn">Yes! 💖</button>
+                <button id="noBtn">No 😢</button>
+            </div>
+        </div>
+
+        <div id="success" class="success-msg">
+            <div class="emoji-display">🎉🥰❤️</div>
+            <h1>Yay! See you on the 14th!</h1>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const mainCard = document.getElementById('main-card');
+        const successSection = document.getElementById('success');
+        const emoji = document.getElementById('emoji');
+        const question = document.getElementById('question');
+
+        let noCount = 0;
+        const phrases = [
+            "No 😢", 
+            "Are you sure?", 
+            "Really sure??", 
+            "Think again!", 
+            "Last chance!", 
+            "Surely not?", 
+            "You might regret this!", 
+            "Give it another thought!", 
+            "Are you absolutely certain?", 
+            "Have a heart! ❤️"
+        ];
+
+        noBtn.addEventListener('click', () => {
+            noCount++;
+            
+            // Change the emoji
+            const emojis = ["🤨", "😟", "😔", "😭", "💔"];
+            emoji.innerText = emojis[Math.min(noCount, emojis.length - 1)];
+
+            // Make the Yes button bigger
+            const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentSize * 1.4) + "px";
+            yesBtn.style.padding = (currentSize * 0.8) + "px " + (currentSize * 1.6) + "px";
+
+            // Update No button text
+            if (noCount < phrases.length) {
+                noBtn.innerText = phrases[noCount];
+            } else {
+                noBtn.style.display = 'none'; // Hide if they keep saying no!
+            }
+        });
+
+        yesBtn.addEventListener('click', () => {
+            mainCard.style.display = 'none';
+            successSection.style.display = 'block';
+            document.body.style.backgroundColor = '#ff4d6d';
+            document.querySelector('#success h1').style.color = 'white';
+        });
+    </script>
+</body>
+</html>
